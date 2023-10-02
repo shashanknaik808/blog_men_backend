@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = require("./routes/user-routes.js");
+const userRouter = require("./routes/user-routes.js");
 
 const app = express();
 
-app.use("/api/user" ,router)
+app.use(express.json());
+app.use("/api/user" ,userRouter);
 
 mongoose
     .connect('mongodb+srv://shashanknaik808:qwerty123456@cluster0.nzvwcqv.mongodb.net/Blog?retryWrites=true&w=majority'
