@@ -1,4 +1,5 @@
 const User = require("../model/User.js");
+const bcrypt = require("bcryptjs");
 
 module.exports.getAllUser = async (req, res, next) => {
     let users;
