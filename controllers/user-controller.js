@@ -25,7 +25,7 @@ const signup = async (req, res, next) => {
     let existingUser;
     try {
         existingUser = await User.findOne({
-            email;
+            email
         });
     }
     catch (err) {
