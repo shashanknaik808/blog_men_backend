@@ -4,7 +4,7 @@ const signup = require("../controllers/user-controller.js");
 
 const userRouter = express.Router();
 
-router.get("/", getAllUser);
-router.post("/signup", signup)
+userRouter.get("/", getAllUser);
+userRouter.post("/signup", signup)
 
-module.exports = router;
+module.exports = userRouter;
