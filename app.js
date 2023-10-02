@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRouter = require("./routes/user-routes.js");
+const blogRouter = require("./routes/blog-routes.js");
 
 const app = express();
 
 app.use(express.json());
-app.use("/api/user" ,userRouter);
+app.use("/api/user", userRouter);
+app.use("/api/blog", blogRouter);
 
 mongoose
     .connect('mongodb+srv://shashanknaik808:qwerty123456@cluster0.nzvwcqv.mongodb.net/Blog?retryWrites=true&w=majority'
