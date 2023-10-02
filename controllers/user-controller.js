@@ -52,4 +52,24 @@ module.exports.signup = async (req, res, next) => {
         return console.log(err);
     }
     return res.status(201).json({ user })
+};
+
+module.exports.login = async (req, res, next) => {
+    const { name, email, password } =
+        req.body;
+
+    let existingUser;
+    try {
+        existingUser = await User.findOne({
+            email
+        });
+    }
+    catch (err) {
+        return console.log(err);
+    }
+    if (existingUser) {
+        return res
+            .status(404)
+            .json({ message: "Couldnt Find User By This Email" });
+    }
 }
