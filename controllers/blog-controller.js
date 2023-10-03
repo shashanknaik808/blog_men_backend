@@ -19,6 +19,17 @@ module.exports.getAllBlogs = async (req, res, next) => {
 module.exports.addBlog = async (req, res, next) => {
     const { title, description, image, user } = req.body;
 
+    let existingUser;
+    try {
+        existingUser = await User.findById(user);
+    }
+    catch (err) {
+        return console.log(err);
+    }
+    if (!existingUser) {
+        return res.status(400).json({ message: "Unable TO Find User By This ID" });
+    }
+
     const blog = new Blog({
         title,
         description,
@@ -26,10 +37,16 @@ module.exports.addBlog = async (req, res, next) => {
         user
     });
     try {
-        await blog.save();
+        const session = await mongoose.startSession();
+        session.startTransaction({ session });
+        await blog.save({ session });
+        existingUser.blogs.push(blog);
+        await existingUser.save({ session });
+        await session.commitTransaction();
     }
     catch (err) {
-        return console.log(err);
+        console.log(err);
+        return res.status(500).json({ message: err });
     }
     return res.status(200).json({ blog })
 };
@@ -75,13 +92,15 @@ module.exports.deleteBlog = async (req, res, next) => {
 
     let blog;
     try {
-        blog = await Blog.findByIdAndRemove(id);
+        blog = await Blog.findByIdAndRemove(id).populate('user');
+        await blog.user.blogs.pull(blog);
+        await blog.user.save();
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
-    if(!blog){
-        return res.status(500).jspn({message: "Unable To Delete"})
+    if (!blog) {
+        return res.status(500).jspn({ message: "Unable To Delete" })
     }
-    return res.status(200).json({message: "Successfully Deleted"})
+    return res.status(200).json({ message: "Successfully Deleted" })
 }
