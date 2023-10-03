@@ -17,6 +17,7 @@ const blogSchema = new Schema({
     },
     user: {
         type: String,
+        // ref:"User",
         required: true
     }
 });
