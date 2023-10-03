@@ -4,4 +4,4 @@ const blogRouter = express.Router();
 
 blogRouter.get("/", getAllBlogs);
 
-module.exports = blogRoute;
+module.exports = blogRouter;
