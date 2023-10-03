@@ -25,4 +25,11 @@ module.exports.addBlog = async (req, res, next) => {
         image,
         user
     });
-}
+    try {
+        await blog.save();
+    }
+    catch (err) {
+        return console.log(err);
+    }
+    return res.status(200).json({ blog })
+};
