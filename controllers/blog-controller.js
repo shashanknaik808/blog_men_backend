@@ -33,3 +33,7 @@ module.exports.addBlog = async (req, res, next) => {
     }
     return res.status(200).json({ blog })
 };
+
+module.exports.updateBlog = async (req, res, next) => {
+
+}
