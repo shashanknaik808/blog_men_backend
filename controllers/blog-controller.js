@@ -15,3 +15,14 @@ module.exports.getAllBlogs = async (req, res, next) => {
     }
     return res.status(200).json({ blogs });
 }
+
+module.exports.addBlog = async (req, res, next) => {
+    const { title, description, image, user } = req.body;
+
+    const blog = new Blog({
+        title,
+        description,
+        image,
+        user
+    });
+}
